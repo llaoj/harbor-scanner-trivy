@@ -57,6 +57,11 @@ func (c *controller) scan(scanJobID string, req harbor.ScanRequest) (err error) 
 		return xerrors.Errorf("updating scan job status: %v", err)
 	}
 
+	log.WithFields(log.Fields{
+		"enable":           c.ruleChecker.Config.Enable,
+		"baseImageDigests": c.ruleChecker.Config.BaseImageDigests,
+		"imageLabels":      c.ruleChecker.Config.ImageLabels,
+	}).Debug("Rule Checker Config")
 	if c.ruleChecker.Config.Enable {
 		if err = c.ruleChecker.Check(req); err != nil {
 			return xerrors.Errorf("running rule ckecker: %v", err)
