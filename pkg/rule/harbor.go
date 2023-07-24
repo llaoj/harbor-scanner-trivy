@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 const LabelIDLegal = 1
@@ -49,6 +51,10 @@ func (c *HarborClient) Get(url string) (*http.Response, error) {
 	}
 	request.Header.Add("Authorization", c.auth)
 	request.Header.Add("Accept", "application/json")
+	log.WithFields(log.Fields{
+		"url":  url,
+		"auth": c.auth,
+	}).Trace("Harbor Post API")
 	return c.client.Do(request)
 }
 
@@ -60,6 +66,10 @@ func (c *HarborClient) Post(url string, body io.Reader) (*http.Response, error) 
 	request.Header.Add("Authorization", c.auth)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("Content-Type", "application/json")
+	log.WithFields(log.Fields{
+		"url":  url,
+		"auth": c.auth,
+	}).Trace("Harbor Post API")
 	return c.client.Do(request)
 }
 
@@ -70,6 +80,10 @@ func (c *HarborClient) Delete(url string) (*http.Response, error) {
 	}
 	request.Header.Add("Authorization", c.auth)
 	request.Header.Add("Accept", "application/json")
+	log.WithFields(log.Fields{
+		"url":  url,
+		"auth": c.auth,
+	}).Trace("Harbor Delete API")
 	return c.client.Do(request)
 }
 
