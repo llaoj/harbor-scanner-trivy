@@ -171,6 +171,10 @@ func TestGetConfig(t *testing.T) {
 				"SCANNER_REDIS_POOL_MAX_ACTIVE":   "3",
 				"SCANNER_REDIS_POOL_MAX_IDLE":     "7",
 				"SCANNER_REDIS_POOL_IDLE_TIMEOUT": "3m",
+
+				"SCANNER_RULE_CHECKER_ENABLE":             "true",
+				"SCANNER_RULE_CHECKER_BASE_IMAGE_DIGESTS": "c4c7334c2caba18f404262545f78ef8911e74b9334d852192ff9f225051fdb16",
+				"SCANNER_RULE_CHECKER_IMAGE_LABELS":       "78b72b3a80deaae8b73474934b74bba16da5460dcb4a5c7a67f29f9a917dcfac",
 			},
 			expectedConfig: Config{
 				API: API{
@@ -212,6 +216,11 @@ func TestGetConfig(t *testing.T) {
 				JobQueue: JobQueue{
 					Namespace:         "job-queue.ns",
 					WorkerConcurrency: 3,
+				},
+				RuleChecker: RuleChecker{
+					Enable:           true,
+					BaseImageDigests: "c4c7334c2caba18f404262545f78ef8911e74b9334d852192ff9f225051fdb16",
+					ImageLabels:      "78b72b3a80deaae8b73474934b74bba16da5460dcb4a5c7a67f29f9a917dcfac",
 				},
 			},
 		},
