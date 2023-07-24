@@ -93,6 +93,7 @@ func parseRepository(repository string) (project, repo string, ok bool) {
 		ok = true
 		project = s[0]
 		repo = s[1]
+		return
 	}
 	ok = false
 	return
