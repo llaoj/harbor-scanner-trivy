@@ -16,11 +16,12 @@ type BuildInfo struct {
 }
 
 type Config struct {
-	API        API
-	Trivy      Trivy
-	RedisStore RedisStore
-	JobQueue   JobQueue
-	RedisPool  RedisPool
+	API         API
+	Trivy       Trivy
+	RedisStore  RedisStore
+	JobQueue    JobQueue
+	RedisPool   RedisPool
+	RuleChecker RuleChecker
 }
 
 type Trivy struct {
@@ -71,6 +72,14 @@ type RedisPool struct {
 	ConnectionTimeout time.Duration `env:"SCANNER_REDIS_POOL_CONNECTION_TIMEOUT" envDefault:"1s"`
 	ReadTimeout       time.Duration `env:"SCANNER_REDIS_POOL_READ_TIMEOUT" envDefault:"1s"`
 	WriteTimeout      time.Duration `env:"SCANNER_REDIS_POOL_WRITE_TIMEOUT" envDefault:"1s"`
+}
+
+type RuleChecker struct {
+	Enable           bool   `env:"SCANNER_RULE_CHECKER_ENABLE" envDefault:"true"`
+	AdminUserName    string `env:"SCANNER_RULE_CHECKER_ADMIN_USERNAME" envDefault:""`
+	AdminPassword    string `env:"SCANNER_RULE_CHECKER_ADMIN_PASSWORD" envDefault:""`
+	BaseImageDigests string `env:"SCANNER_RULE_CHECKER_BASE_IMAGE_DIGESTS" envDefault:""`
+	ImageLabels      string `env:"SCANNER_RULE_CHECKER_IMAGE_LABELS" envDefault:""`
 }
 
 func GetLogLevel() logrus.Level {

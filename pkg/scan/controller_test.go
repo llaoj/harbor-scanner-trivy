@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/aquasecurity/harbor-scanner-trivy/pkg/etc"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/harbor"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/job"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/mock"
+	"github.com/aquasecurity/harbor-scanner-trivy/pkg/rule"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/trivy"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/xerrors"
@@ -127,12 +129,17 @@ func TestController_Scan(t *testing.T) {
 			store := mock.NewStore()
 			wrapper := trivy.NewMockWrapper()
 			transformer := mock.NewTransformer()
+			ruleChecker := rule.NewChecker(etc.RuleChecker{
+				Enable:           false,
+				BaseImageDigests: "",
+				ImageLabels:      "",
+			})
 
 			mock.ApplyExpectations(t, store, tc.storeExpectation...)
 			mock.ApplyExpectations(t, wrapper, tc.wrapperExpectation)
 			mock.ApplyExpectations(t, transformer, tc.transformerExpectation)
 
-			err := NewController(store, wrapper, transformer).Scan(tc.scanJobID, tc.scanRequest)
+			err := NewController(store, wrapper, transformer, ruleChecker).Scan(tc.scanJobID, tc.scanRequest)
 			assert.Equal(t, tc.expectedError, err)
 
 			store.AssertExpectations(t)

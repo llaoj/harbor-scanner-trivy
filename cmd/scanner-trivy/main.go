@@ -13,6 +13,7 @@ import (
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/persistence/redis"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/queue"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/redisx"
+	"github.com/aquasecurity/harbor-scanner-trivy/pkg/rule"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/scan"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/trivy"
 	log "github.com/sirupsen/logrus"
@@ -64,7 +65,8 @@ func run(info etc.BuildInfo) error {
 
 	wrapper := trivy.NewWrapper(config.Trivy, ext.DefaultAmbassador)
 	store := redis.NewStore(config.RedisStore, pool)
-	controller := scan.NewController(store, wrapper, scan.NewTransformer(&scan.SystemClock{}))
+	ruleChecker := rule.NewChecker(config.RuleChecker)
+	controller := scan.NewController(store, wrapper, scan.NewTransformer(&scan.SystemClock{}), ruleChecker)
 	enqueuer := queue.NewEnqueuer(config.JobQueue, pool, store)
 	worker := queue.NewWorker(config.JobQueue, pool, controller)
 
