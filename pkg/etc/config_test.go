@@ -94,6 +94,11 @@ func TestGetConfig(t *testing.T) {
 					Namespace:         "harbor.scanner.trivy:job-queue",
 					WorkerConcurrency: 1,
 				},
+				RuleChecker: RuleChecker{
+					Enable:           true,
+					BaseImageDigests: "",
+					ImageLabels:      "",
+				},
 			},
 		},
 		{
@@ -132,6 +137,11 @@ func TestGetConfig(t *testing.T) {
 				JobQueue: JobQueue{
 					Namespace:         "harbor.scanner.trivy:job-queue",
 					WorkerConcurrency: 1,
+				},
+				RuleChecker: RuleChecker{
+					Enable:           true,
+					BaseImageDigests: "",
+					ImageLabels:      "",
 				},
 			},
 		},
