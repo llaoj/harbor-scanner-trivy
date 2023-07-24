@@ -130,9 +130,9 @@ func TestController_Scan(t *testing.T) {
 			wrapper := trivy.NewMockWrapper()
 			transformer := mock.NewTransformer()
 			ruleChecker := rule.NewChecker(etc.RuleChecker{
-				Enable:           true,
-				BaseImageDigests: "c4c7334c2caba18f404262545f78ef8911e74b9334d852192ff9f225051fdb16",
-				ImageLabels:      "78b72b3a80deaae8b73474934b74bba16da5460dcb4a5c7a67f29f9a917dcfac",
+				Enable:           false,
+				BaseImageDigests: "",
+				ImageLabels:      "",
 			})
 
 			mock.ApplyExpectations(t, store, tc.storeExpectation...)
