@@ -96,6 +96,8 @@ func TestGetConfig(t *testing.T) {
 				},
 				RuleChecker: RuleChecker{
 					Enable:           true,
+					AdminUserName:    "",
+					AdminPassword:    "",
 					BaseImageDigests: "",
 					ImageLabels:      "",
 				},
@@ -140,6 +142,8 @@ func TestGetConfig(t *testing.T) {
 				},
 				RuleChecker: RuleChecker{
 					Enable:           true,
+					AdminUserName:    "",
+					AdminPassword:    "",
 					BaseImageDigests: "",
 					ImageLabels:      "",
 				},
@@ -183,6 +187,8 @@ func TestGetConfig(t *testing.T) {
 				"SCANNER_REDIS_POOL_IDLE_TIMEOUT": "3m",
 
 				"SCANNER_RULE_CHECKER_ENABLE":             "true",
+				"SCANNER_RULE_CHECKER_ADMIN_USERNAME":     "",
+				"SCANNER_RULE_CHECKER_ADMIN_PASSWORD":     "",
 				"SCANNER_RULE_CHECKER_BASE_IMAGE_DIGESTS": "c4c7334c2caba18f404262545f78ef8911e74b9334d852192ff9f225051fdb16",
 				"SCANNER_RULE_CHECKER_IMAGE_LABELS":       "78b72b3a80deaae8b73474934b74bba16da5460dcb4a5c7a67f29f9a917dcfac",
 			},
@@ -229,6 +235,8 @@ func TestGetConfig(t *testing.T) {
 				},
 				RuleChecker: RuleChecker{
 					Enable:           true,
+					AdminUserName:    "",
+					AdminPassword:    "",
 					BaseImageDigests: "c4c7334c2caba18f404262545f78ef8911e74b9334d852192ff9f225051fdb16",
 					ImageLabels:      "78b72b3a80deaae8b73474934b74bba16da5460dcb4a5c7a67f29f9a917dcfac",
 				},

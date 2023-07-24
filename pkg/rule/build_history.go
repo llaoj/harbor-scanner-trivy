@@ -9,7 +9,7 @@ import (
 )
 
 func CheckBuildHistory(req harbor.ScanRequest, config etc.RuleChecker) error {
-	harbor := NewHarborClient(req.Registry.URL, req.Registry.Authorization)
+	harbor := NewHarborClient(req.Registry.URL, config.AdminUserName, config.AdminPassword)
 	project, repo, ok := parseRepository(req.Artifact.Repository)
 	log.WithFields(log.Fields{
 		"project": project,

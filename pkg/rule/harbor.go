@@ -19,9 +19,10 @@ const LabelIDLegal = 1
 const LabelIDIlegal = 2
 
 type HarborClient struct {
-	baseUrl string
-	auth    string
-	client  *http.Client
+	baseUrl  string
+	username string
+	password string
+	client   *http.Client
 }
 
 type HistoryRecord struct {
@@ -29,15 +30,16 @@ type HistoryRecord struct {
 	CreatedBy string `json:"created_by"`
 }
 
-func NewHarborClient(baseUrl, auth string) *HarborClient {
+func NewHarborClient(baseUrl, username, password string) *HarborClient {
 	tr := &http.Transport{
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
 		DisableCompression: true,
 	}
 	return &HarborClient{
-		baseUrl: baseUrl,
-		auth:    auth,
+		baseUrl:  baseUrl,
+		username: username,
+		password: password,
 		client: &http.Client{
 			Transport: tr,
 			Timeout:   30 * time.Second},
@@ -49,11 +51,10 @@ func (c *HarborClient) Get(url string) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	request.Header.Add("Authorization", c.auth)
+	request.SetBasicAuth(c.username, c.password)
 	request.Header.Add("Accept", "application/json")
 	log.WithFields(log.Fields{
-		"url":  url,
-		"auth": c.auth,
+		"url": url,
 	}).Trace("Harbor Post API")
 	return c.client.Do(request)
 }
@@ -63,12 +64,11 @@ func (c *HarborClient) Post(url string, body io.Reader) (*http.Response, error) 
 	if err != nil {
 		return nil, err
 	}
-	request.Header.Add("Authorization", c.auth)
+	request.SetBasicAuth(c.username, c.password)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("Content-Type", "application/json")
 	log.WithFields(log.Fields{
-		"url":  url,
-		"auth": c.auth,
+		"url": url,
 	}).Trace("Harbor Post API")
 	return c.client.Do(request)
 }
@@ -78,11 +78,10 @@ func (c *HarborClient) Delete(url string) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	request.Header.Add("Authorization", c.auth)
+	request.SetBasicAuth(c.username, c.password)
 	request.Header.Add("Accept", "application/json")
 	log.WithFields(log.Fields{
-		"url":  url,
-		"auth": c.auth,
+		"url": url,
 	}).Trace("Harbor Delete API")
 	return c.client.Do(request)
 }

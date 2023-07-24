@@ -76,6 +76,8 @@ type RedisPool struct {
 
 type RuleChecker struct {
 	Enable           bool   `env:"SCANNER_RULE_CHECKER_ENABLE" envDefault:"true"`
+	AdminUserName    string `env:"SCANNER_RULE_CHECKER_ADMIN_USERNAME" envDefault:""`
+	AdminPassword    string `env:"SCANNER_RULE_CHECKER_ADMIN_PASSWORD" envDefault:""`
 	BaseImageDigests string `env:"SCANNER_RULE_CHECKER_BASE_IMAGE_DIGESTS" envDefault:""`
 	ImageLabels      string `env:"SCANNER_RULE_CHECKER_IMAGE_LABELS" envDefault:""`
 }
