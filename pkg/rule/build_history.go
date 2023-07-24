@@ -1,7 +1,6 @@
 package rule
 
 import (
-	"errors"
 	"strings"
 
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/etc"
@@ -12,7 +11,7 @@ func CheckBuildHistory(req harbor.ScanRequest, config etc.RuleChecker) error {
 	harbor := NewHarborClient(req.Registry.URL, req.Registry.Authorization)
 	project, repo, ok := parseRepository(req.Artifact.Repository)
 	if !ok {
-		return errors.New("cannot parse repository")
+		return nil
 	}
 	history, err := harbor.GetBuildHistory(project, repo, req.Artifact.Digest)
 	if err != nil {
