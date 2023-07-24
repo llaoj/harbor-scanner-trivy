@@ -45,7 +45,7 @@ func NewHarborClient(baseUrl, auth string) *HarborClient {
 }
 
 func (c *HarborClient) Get(url string) (*http.Response, error) {
-	request, err := http.NewRequest(http.MethodPost, url, nil)
+	request, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
