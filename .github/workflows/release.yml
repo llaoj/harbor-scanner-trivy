@@ -27,17 +27,23 @@ jobs:
         run: make test-integration
       - name: Run component tests
         run: make test-component
-      - name: Login to Docker Hub
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USER }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Login to ECR
+      #   uses: docker/login-action@v1
+      #   with:
+      #     registry: public.ecr.aws
+      #     username: ${{ secrets.ECR_ACCESS_KEY_ID }}
+      #     password: ${{ secrets.ECR_SECRET_ACCESS_KEY }}
+      - name: Login to ACR
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Login to ECR
-        uses: docker/login-action@v1
-        with:
-          registry: public.ecr.aws
-          username: ${{ secrets.ECR_ACCESS_KEY_ID }}
-          password: ${{ secrets.ECR_SECRET_ACCESS_KEY }}
+          registry: registry.cn-beijing.aliyuncs.com
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       - name: Release
         uses: goreleaser/goreleaser-action@v2
         with:

@@ -7,6 +7,7 @@ import (
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/harbor"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/job"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/persistence"
+	"github.com/aquasecurity/harbor-scanner-trivy/pkg/rule"
 	"github.com/aquasecurity/harbor-scanner-trivy/pkg/trivy"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/xerrors"
@@ -20,13 +21,15 @@ type controller struct {
 	store       persistence.Store
 	wrapper     trivy.Wrapper
 	transformer Transformer
+	ruleChecker *rule.Checker
 }
 
-func NewController(store persistence.Store, wrapper trivy.Wrapper, transformer Transformer) Controller {
+func NewController(store persistence.Store, wrapper trivy.Wrapper, transformer Transformer, ruleChecker *rule.Checker) Controller {
 	return &controller{
 		store:       store,
 		wrapper:     wrapper,
 		transformer: transformer,
+		ruleChecker: ruleChecker,
 	}
 }
 
@@ -52,6 +55,12 @@ func (c *controller) scan(scanJobID string, req harbor.ScanRequest) (err error) 
 	err = c.store.UpdateStatus(scanJobID, job.Pending)
 	if err != nil {
 		return xerrors.Errorf("updating scan job status: %v", err)
+	}
+
+	if c.ruleChecker.Config.Enable {
+		if err = c.ruleChecker.Check(req); err != nil {
+			return xerrors.Errorf("running rule ckecker: %v", err)
+		}
 	}
 
 	imageRef, insecureRegistry, err := req.GetImageRef()
