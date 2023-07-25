@@ -18,4 +18,4 @@ USER scanner
 
 RUN /usr/local/bin/trivy --cache-dir /home/scanner/trivy image --download-db-only
 
-ENTRYPOINT mv -f /home/scanner/trivy/db /home/scanner/.cache/trivy/ && /home/scanner/bin/scanner-trivy
+ENTRYPOINT rm -rf /home/scanner/.cache/trivy/db && mv /home/scanner/trivy/db /home/scanner/.cache/trivy/ && /home/scanner/bin/scanner-trivy
