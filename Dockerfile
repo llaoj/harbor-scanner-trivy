@@ -16,4 +16,6 @@ ENV TRIVY_VERSION=${TRIVY_VERSION}
 
 USER scanner
 
-ENTRYPOINT ["/home/scanner/bin/scanner-trivy"]
+RUN /usr/local/bin/trivy --cache-dir /home/scanner/trivy image --download-db-only
+
+ENTRYPOINT mv -f /home/scanner/trivy/db /home/scanner/.cache/trivy/ && /home/scanner/bin/scanner-trivy

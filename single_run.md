@@ -17,10 +17,10 @@ docker stop harbor-scanner-trivy \
     -e SCANNER_LOG_LEVEL=trace \
     -e SCANNER_REDIS_URL="redis://:VQ2WLo_URY@10.206.38.68:36379/1" \
     -e SCANNER_RULE_CHECKER_ADMIN_USERNAME=admin \
-    -e SCANNER_RULE_CHECKER_ADMIN_PASSWORD="7_T^2nNFRT \
+    -e SCANNER_RULE_CHECKER_ADMIN_PASSWORD="7_T^2nNFRT" \
     -e SCANNER_RULE_CHECKER_BASE_IMAGE_DIGESTS="c4c7334c2caba18f404262545f78ef8911e74b9334d852192ff9f225051fdb16" \
     -e SCANNER_RULE_CHECKER_IMAGE_LABELS="78b72b3a80deaae8b73474934b74bba16da5460dcb4a5c7a67f29f9a917dcfac" \
-    registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:0.30.2-rule-0.13
+    registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:0.30.2-rule-0.15
 ```
 
 3. 定期下载db
