@@ -18,5 +18,6 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
       - name: Build and push image to ACR
         run: |
+          GIT_TAG=${GITHUB_REF#refs/tags/}
           docker build -t registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:${GIT_TAG} .
           docker push registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:${GIT_TAG}
