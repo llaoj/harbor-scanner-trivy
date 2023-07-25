@@ -29,9 +29,8 @@ changelog:
       - '^release'
 dockers:
   - image_templates:
-      # - "docker.io/aquasec/harbor-scanner-trivy:{{ .Version }}"
-      # - "public.ecr.aws/aquasecurity/harbor-scanner-trivy:{{ .Version }}"
-      - "registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:{{ .Version }}"
+      - "docker.io/aquasec/harbor-scanner-trivy:{{ .Version }}"
+      - "public.ecr.aws/aquasecurity/harbor-scanner-trivy:{{ .Version }}"
     ids:
       - scanner-trivy
     build_flag_templates:

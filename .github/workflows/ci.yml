@@ -1,0 +1,22 @@
+name: build image
+
+on:
+  push:
+    tags:
+    - 'rule-v[0-9].[0-9]+.[0-9]+**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to ACR
+        uses: docker/login-action@v1
+        with:
+          registry: registry.cn-beijing.aliyuncs.com
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Build and push image to ACR
+        run: |
+          docker build -t registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:${GIT_TAG} .
+          docker push registry.cn-beijing.aliyuncs.com/llaoj/harbor-scanner-trivy:${GIT_TAG}
