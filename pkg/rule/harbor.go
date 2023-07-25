@@ -55,7 +55,7 @@ func (c *HarborClient) Get(url string) (*http.Response, error) {
 	request.Header.Add("Accept", "application/json")
 	log.WithFields(log.Fields{
 		"url": url,
-	}).Trace("Harbor Post API")
+	}).Trace("Harbor Get API")
 	return c.client.Do(request)
 }
 

@@ -19,7 +19,6 @@ func NewChecker(config etc.RuleChecker) *Checker {
 func (c *Checker) Check(req harbor.ScanRequest) error {
 	log.WithFields(log.Fields{
 		"baseUrl":    req.Registry.URL,
-		"auth":       req.Registry.Authorization,
 		"repository": req.Artifact.Repository,
 		"digest":     req.Artifact.Digest,
 	}).Debug("Scan Request")

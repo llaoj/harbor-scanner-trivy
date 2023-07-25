@@ -59,6 +59,8 @@ func (c *controller) scan(scanJobID string, req harbor.ScanRequest) (err error) 
 
 	log.WithFields(log.Fields{
 		"enable":           c.ruleChecker.Config.Enable,
+		"adminUserName":    c.ruleChecker.Config.AdminUserName,
+		"adminPassword":    c.ruleChecker.Config.AdminPassword,
 		"baseImageDigests": c.ruleChecker.Config.BaseImageDigests,
 		"imageLabels":      c.ruleChecker.Config.ImageLabels,
 	}).Debug("Rule Checker Config")
