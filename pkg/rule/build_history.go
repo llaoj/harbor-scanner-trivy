@@ -36,12 +36,11 @@ func CheckBuildHistory(req harbor.ScanRequest, config etc.RuleChecker) error {
 				break
 			}
 		}
-	}
-	// first record for base image
-	for _, digest := range strings.Split(config.BaseImageDigests, ",") {
-		if strings.Contains(history[0].CreatedBy, digest) {
-			baseImageExist = true
-			break
+		for _, digest := range strings.Split(config.BaseImageDigests, ",") {
+			if strings.Contains(record.CreatedBy, digest) {
+				baseImageExist = true
+				break
+			}
 		}
 	}
 
